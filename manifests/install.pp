@@ -32,7 +32,7 @@ class mariadb::install(
 # Intall MariaDB package
   package { $package_name:
     ensure   => $package_ensure,
-    namse    => $package_name,
+    name     => $package_name,
     provider => $package_provider,
     require  => Exec['clean_cache'],
   }
