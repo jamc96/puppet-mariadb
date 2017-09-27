@@ -6,7 +6,7 @@ class mariadb::params {
   $descr      = 'File Managed by Puppet'
   $enabled    = '1'
   $gpgcheck   = '1'
-  $gpgkey     = "puppet::///${module_name}/RPM-GPG-KEY-MariaDB"
+  $gpgkey     = "file::///${module_name}/RPM-GPG-KEY-MariaDB"
   $version_max = 10.3
   if $version <  $version_max{
     case $operatingsystemmajrelease {
