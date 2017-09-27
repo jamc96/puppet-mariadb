@@ -1,19 +1,22 @@
 class mariadb::params {
-  $version      = 10
-  $release      = 0.29
-  $repo_ensure  = 'present'
-  $repo_name    = 'mariadb'
-  $descr        = 'MariaDB'
-  $enabled      = '1'
-  $gpgcheck     = '1'
-  $gpgkey       = 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB'
-  $os_name      = downcase($operatingsystem)
-  $version_max  = 10
-  $release_max  = 3.1
-  $full_version = "${version}.${release}"
+  $version          = 10
+  $release          = 0.29
+  $repo_ensure      = 'present'
+  $repo_name        = 'mariadb'
+  $descr            = 'MariaDB'
+  $enabled          = '1'
+  $gpgcheck         = '1'
+  $gpgkey           = 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB'
+  $os_name          = downcase($::operatingsystem)
+  $version_max      = 10
+  $release_max      = 3.1
+  $full_version     = "${version}.${release}"
+  $package_name     = 'MariaDB',
+  $package_ensure   = 'present',
+  $package_provider = 'yum',
 
   if $release < $release_max {
-      case $operatingsystemmajrelease {
+      case $::operatingsystemmajrelease {
         '7': {
           $baseurl = "http://yum.mariadb.org/${full_version}/${os_name}/7/x86_64/"
         }
