@@ -10,7 +10,7 @@ class mariadb::params {
   $os_name      = downcase($operatingsystem)
   $version_max  = 10
   $release_max  = 3.1
-  $full_version = "${version}${release}"
+  $full_version = "${version}.${release}"
 
   if $release < $release_max {
       case $operatingsystemmajrelease {
