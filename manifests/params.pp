@@ -12,10 +12,10 @@ class mariadb::params {
   if $version <  $version_max{
     case $operatingsystemmajrelease {
       '7': {
-        $baseurl = "http://yum.mariadb.org/${version}/${operatingsystem}/7"
+        $baseurl = "http://yum.mariadb.org/${version}/downcase(${operatingsystem})/7/x86_64/"
       }
       '6': {
-        $baseurl = "http://yum.mariadb.org/${version}/${operatingsystem}/6"
+        $baseurl = "http://yum.mariadb.org/${version}/downcase(${operatingsystem})/6/x86_64/"
       }
       default: {
         fail('OS Release version not supported on this module')
