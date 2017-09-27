@@ -7,7 +7,7 @@ class mariadb::params {
   $enabled      = '1'
   $gpgcheck     = '1'
   $gpgkey       = 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB'
-  $os_name      = downcase(facts['operatingsystem'])
+  $os_name      = downcase($operatingsystem)
   $full_version = "${version}${release}"
 
   case $release {
