@@ -7,9 +7,9 @@ class mariadb::params {
   $enabled    = '1'
   $gpgcheck   = '1'
   $gpgkey     = "puppet::///${module_name}/RPM-GPG-KEY-MariaDB"
-
-  if $version < 10.3 {
-    case facts['operatingsystemmajrelease'] {
+  $version_max = 10.3
+  if $version <  $version_max{
+    case $operatingsystemmajrelease {
       '7': {
         $baseurl = "http://yum.mariadb.org/${version}/${operatingsystem}/7"
       }
