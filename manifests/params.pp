@@ -2,8 +2,8 @@
 #
 class mariadb::params {
   $version    = 10.0
-  $repo_name  = 'mariadb.repo'
-  $descr      = 'File Managed by Puppet'
+  $repo_name  = 'mariadb'
+  $descr      = 'MariaDB'
   $enabled    = '1'
   $gpgcheck   = '1'
   $gpgkey     = 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB'
