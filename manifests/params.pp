@@ -11,9 +11,9 @@ class mariadb::params {
   $version_max      = 10
   $release_max      = 3.1
   $full_version     = "${version}.${release}"
-  $package_name     = 'MariaDB',
-  $package_ensure   = 'present',
-  $package_provider = 'yum',
+  $package_name     = 'MariaDB'
+  $package_ensure   = 'present'
+  $package_provider = 'yum'
 
   if $release < $release_max {
       case $::operatingsystemmajrelease {
