@@ -43,8 +43,8 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class mariadb(
-  String $version     = $mariadb::params::version,
-  String $release     = $mariadb::params::release,
+  Integer $version     = $mariadb::params::version,
+  Float $release     = $mariadb::params::release,
   String $repo_ensure = $mariadb::params::repo_ensure,
   String $repo_name   = $mariadb::params::repo_name,
   String $baseurl     = $mariadb::params::baseurl,

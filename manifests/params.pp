@@ -14,7 +14,7 @@ class mariadb::params {
   $os_name      = downcase(facts['operatingsystem'])
   $full_version = "${version}${release}"
 
-  if $release <  $release_max {
+  if $release_max >= $release {
     case facts['operatingsystemmajrelease'] {
       '7': {
         $baseurl = "http://yum.mariadb.org/${full_version}/${os_name}/7/x86_64/"
