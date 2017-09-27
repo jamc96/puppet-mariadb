@@ -21,7 +21,6 @@ class mariadb::install(
     enabled  => $enabled,
     gpgcheck => $gpgcheck,
     gpgkey   => $gpgkey,
-    suscribe => Exec['clean_cache'],
   }
 # Clean the yum cache
   exec { 'clean_cache':
@@ -29,6 +28,7 @@ class mariadb::install(
     path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     timeout     => 0,
     refreshonly => true,
+    require     => Yumrepo[$repo_name],
   }
 # Intall MariaDB package
   package { $package_name:
