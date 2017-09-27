@@ -1,12 +1,13 @@
 # == Class: mariadb::para
 #
 class mariadb::params {
-  $version    = 10.0
-  $repo_name  = 'mariadb'
-  $descr      = 'MariaDB'
-  $enabled    = '1'
-  $gpgcheck   = '1'
-  $gpgkey     = 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB'
+  $version     = 10.0
+  $repo_ensure = 'present'
+  $repo_name   = 'mariadb'
+  $descr       = 'MariaDB'
+  $enabled     = '1'
+  $gpgcheck    = '1'
+  $gpgkey      = 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB'
   $version_max = 10.3
   if $version <  $version_max{
     case $operatingsystemmajrelease {
