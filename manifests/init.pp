@@ -43,8 +43,15 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class mariadb(
-  
+  Integer $version    = $mariadb::params::version,
+  String $repo_name  = $mariadb::params::repo_name,
+  String $baseurl    = $mariadb::params::baseurl,
+  String $descr      = $mariadb::params::descr,
+  String $enabled    = $mariadb::params::enabled,
+  String $gpgcheck   = $mariadb::params::gpgcheck,
+  String $gpgkey     = $mariadb::params::gpgkey,
  ) inherits mariadb::params {
 
-
+  class { '::mariadb::install': } ->
+  Class['::mariadb']
 }
