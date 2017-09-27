@@ -55,7 +55,29 @@ class mariadb(
   String $package_name     = $mariadb::params::package_name,
   String $package_ensure   = $mariadb::params::package_ensure,
   String $package_provider = $mariadb::params::package_provider,
+  Float $release_max       = $mariadb::params::release_max,
+  String $public_repo      = $mariadb::params::public_repo,
+
  ) inherits mariadb::params {
+  # GLobal variables
+  $full_version = "${version}.${release}"
+  $os_name  = $mariadb::params::os_name
+  # Validating release version
+  if $release < $release_max {
+      case $::operatingsystemmajrelease {
+        '7': {
+          $baseurl = "${public_repo}/${full_version}/${os_name}/${operatingsystemmajrelease}/${architecture}/"
+        }
+        '6': {
+          $baseurl = "${public_repo}/${full_version}/${os_name}/${operatingsystemmajrelease}/${architecture}/"
+        }
+        default: {
+          fail('OS Release version not supported on this module')
+        }
+      }
+    } else{
+      fail('MariaDB version is not supported')
+    }
 
   class { '::mariadb::install': } ->
   Class['::mariadb']
