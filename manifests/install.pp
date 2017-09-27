@@ -13,7 +13,7 @@ class mariadb::install(
     baseurl  => $baseurl,
     descr    => $descr,
     enabled  => $enabled,
-    gpgcheck => $gpgkey,
+    gpgcheck => $gpgcheck,
     gpgkey   => $gpgkey,
   }
 }
