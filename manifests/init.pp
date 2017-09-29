@@ -56,7 +56,6 @@ class mariadb(
   String $package_provider = $mariadb::params::package_provider,
   Float $release_max       = $mariadb::params::release_max,
   String $public_repo      = $mariadb::params::public_repo,
-  String $baseurl          = '',
  ) inherits mariadb::params {
   # GLobal variables
   $full_version = "${version}.${release}"
