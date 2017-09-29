@@ -47,7 +47,6 @@ class mariadb(
   Float $release           = $mariadb::params::release,
   String $repo_ensure      = $mariadb::params::repo_ensure,
   String $repo_name        = $mariadb::params::repo_name,
-  String $baseurl          = $mariadb::params::baseurl,
   String $descr            = $mariadb::params::descr,
   String $enabled          = $mariadb::params::enabled,
   String $gpgcheck         = $mariadb::params::gpgcheck,
@@ -57,7 +56,7 @@ class mariadb(
   String $package_provider = $mariadb::params::package_provider,
   Float $release_max       = $mariadb::params::release_max,
   String $public_repo      = $mariadb::params::public_repo,
-
+  String $baseurl          = '',
  ) inherits mariadb::params {
   # GLobal variables
   $full_version = "${version}.${release}"
