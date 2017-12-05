@@ -15,7 +15,7 @@ class mariadb::params {
   $package_ensure   = 'present'
   $package_provider = 'yum'
 
-  $os_name =  ? $facts['operatingsystem']{
+  $os_name = $facts['operatingsystem'] ? {
     'RedHat' => 'rhel',
     default  => 'centos',
   }
