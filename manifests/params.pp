@@ -8,11 +8,15 @@ class mariadb::params {
   $gpgcheck         = '1'
   $public_repo      = 'https://yum.mariadb.org'
   $gpgkey           = "${public_repo}/RPM-GPG-KEY-MariaDB"
-  $os_name          = downcase($::operatingsystem)
   $version_max      = 10
   $release_max      = 3.1
   $full_version     = "${version}.${release}"
   $package_name     = 'MariaDB'
   $package_ensure   = 'present'
   $package_provider = 'yum'
+
+  $os_name =  ? $facts['operatingsystem']{
+    'RedHat' => 'rhel',
+    default  => 'centos',
   }
+}
