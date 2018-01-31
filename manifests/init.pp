@@ -54,14 +54,62 @@ class mariadb(
   Optional[String] $package_name     = undef,
   Optional[String] $package_ensure   = undef,
   Optional[String] $package_provider = undef,
-  Optional[Float] $release_max       = undef,
   Optional[String] $public_repo      = undef,
   ) inherits mariadb::params {
   # GLobal variables
+  $use_version = $version ? {
+    undef => $::mariadb::params::version,
+    default => $version,
+  }
+  $use_release = $release ? {
+    undef => $::mariadb::params::release,
+    default => $release,
+  }
+  $use_repo_ensure = $repo_ensure ? {
+    undef => $::mariadb::params::repo_ensure,
+    default => $repo_ensure,
+  }
+  $use_repo_name = $repo_name ? {
+    undef => $::mariadb::params::repo_name,
+    default => $repo_name,
+  }
+  $use_descr = $descr ? {
+    undef => $::mariadb::params::descr,
+    default => $descr,
+  }
+  $use_enabled = $enabled ? {
+    undef => $::mariadb::params::enabled,
+    default => $enabled,
+  }
+  $use_gpgcheck = $gpgcheck ? {
+    undef => $::mariadb::params::gpgcheck,
+    default => $gpgcheck,
+  }
+  $use_gpgkey = $gpgkey ? {
+    undef => $::mariadb::params::gpgkey,
+    default => $gpgkey,
+  }
+  $use_package_name = $package_name ? {
+    undef => $::mariadb::params::package_name,
+    default => $package_name,
+  }
+  $use_package_ensure = $package_ensure ? {
+    undef => $::mariadb::params::package_ensure,
+    default => $package_ensure,
+  }
+  $use_package_provider = $package_provider ? {
+    undef => $::mariadb::params::package_provider,
+    default => $package_provider,
+  }
+  $use_public_repo = $public_repo ? {
+    undef => $::mariadb::params::public_repo,
+    default => $public_repo,
+  }
+
   $full_version = "${version}.${release}"
   $os_name  = $mariadb::params::os_name
   # Validating release version
-  if $release < $release_max {
+  if $use_release < $::mariadb::params::release_max {
       case $::operatingsystemmajrelease {
         '7': {
           $baseurl = "${public_repo}/${full_version}/${os_name}/$::{operatingsystemmajrelease}/$::{architecture}/"
@@ -76,58 +124,6 @@ class mariadb(
     } else{
       fail('MariaDB version is not supported')
     }
-          $use_version = $version ? {
-            undef => $::mariadb::params::version,
-            default => $version,
-          }
-          $use_release = $release ? {
-            undef => $::mariadb::params::release,
-            default => $release,
-          }
-          $use_repo_ensure = $repo_ensure ? {
-            undef => $::mariadb::params::repo_ensure,
-            default => $repo_ensure,
-          }
-          $use_repo_name = $repo_name ? {
-            undef => $::mariadb::params::repo_name,
-            default => $repo_name,
-          }
-          $use_descr = $descr ? {
-            undef => $::mariadb::params::descr,
-            default => $descr,
-          }
-          $use_enabled = $enabled ? {
-            undef => $::mariadb::params::enabled,
-            default => $enabled,
-          }
-          $use_gpgcheck = $gpgcheck ? {
-            undef => $::mariadb::params::gpgcheck,
-            default => $gpgcheck,
-          }
-          $use_gpgkey = $gpgkey ? {
-            undef => $::mariadb::params::gpgkey,
-            default => $gpgkey,
-          }
-          $use_package_name = $package_name ? {
-            undef => $::mariadb::params::package_name,
-            default => $package_name,
-          }
-          $use_package_ensure = $package_ensure ? {
-            undef => $::mariadb::params::package_ensure,
-            default => $package_ensure,
-          }
-          $use_package_provider = $package_provider ? {
-            undef => $::mariadb::params::package_provider,
-            default => $package_provider,
-          }
-          $use_release_max = $release_max ? {
-            undef => $::mariadb::params::release_max,
-            default => $release_max,
-          }
-          $use_public_repo = $public_repo ? {
-            undef => $::mariadb::params::public_repo,
-            default => $public_repo,
-          }
 
   class { '::mariadb::install': } -> Class['::mariadb']
 }
