@@ -1,3 +1,5 @@
+# == Class: mariadb::params
+#
 class mariadb::params {
   $version          = 10
   $release          = 0.29

@@ -43,20 +43,20 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class mariadb(
-  Integer $version         = $mariadb::params::version,
-  Float $release           = $mariadb::params::release,
-  String $repo_ensure      = $mariadb::params::repo_ensure,
-  String $repo_name        = $mariadb::params::repo_name,
-  String $descr            = $mariadb::params::descr,
-  String $enabled          = $mariadb::params::enabled,
-  String $gpgcheck         = $mariadb::params::gpgcheck,
-  String $gpgkey           = $mariadb::params::gpgkey,
-  String $package_name     = $mariadb::params::package_name,
-  String $package_ensure   = $mariadb::params::package_ensure,
-  String $package_provider = $mariadb::params::package_provider,
-  Float $release_max       = $mariadb::params::release_max,
-  String $public_repo      = $mariadb::params::public_repo,
- ) inherits mariadb::params {
+  Optional[Integer] $version         = undef,
+  Optional[Float] $release           = undef,
+  Optional[String] $repo_ensure      = undef,
+  Optional[String] $repo_name        = undef,
+  Optional[String] $descr            = undef,
+  Optional[String] $enabled          = undef,
+  Optional[String] $gpgcheck         = undef,
+  Optional[String] $gpgkey           = undef,
+  Optional[String] $package_name     = undef,
+  Optional[String] $package_ensure   = undef,
+  Optional[String] $package_provider = undef,
+  Optional[Float] $release_max       = undef,
+  Optional[String] $public_repo      = undef,
+  ) inherits mariadb::params {
   # GLobal variables
   $full_version = "${version}.${release}"
   $os_name  = $mariadb::params::os_name
@@ -64,10 +64,10 @@ class mariadb(
   if $release < $release_max {
       case $::operatingsystemmajrelease {
         '7': {
-          $baseurl = "${public_repo}/${full_version}/${os_name}/${operatingsystemmajrelease}/${architecture}/"
+          $baseurl = "${public_repo}/${full_version}/${os_name}/$::{operatingsystemmajrelease}/$::{architecture}/"
         }
         '6': {
-          $baseurl = "${public_repo}/${full_version}/${os_name}/${operatingsystemmajrelease}/${architecture}/"
+          $baseurl = "${public_repo}/${full_version}/${os_name}/$::{operatingsystemmajrelease}/$::{architecture}/"
         }
         default: {
           fail('OS Release version not supported on this module')
@@ -76,7 +76,58 @@ class mariadb(
     } else{
       fail('MariaDB version is not supported')
     }
+          $use_version = $version ? {
+            undef => $::mariadb::params::version,
+            default => $version,
+          }
+          $use_release = $release ? {
+            undef => $::mariadb::params::release,
+            default => $release,
+          }
+          $use_repo_ensure = $repo_ensure ? {
+            undef => $::mariadb::params::repo_ensure,
+            default => $repo_ensure,
+          }
+          $use_repo_name = $repo_name ? {
+            undef => $::mariadb::params::repo_name,
+            default => $repo_name,
+          }
+          $use_descr = $descr ? {
+            undef => $::mariadb::params::descr,
+            default => $descr,
+          }
+          $use_enabled = $enabled ? {
+            undef => $::mariadb::params::enabled,
+            default => $enabled,
+          }
+          $use_gpgcheck = $gpgcheck ? {
+            undef => $::mariadb::params::gpgcheck,
+            default => $gpgcheck,
+          }
+          $use_gpgkey = $gpgkey ? {
+            undef => $::mariadb::params::gpgkey,
+            default => $gpgkey,
+          }
+          $use_package_name = $package_name ? {
+            undef => $::mariadb::params::package_name,
+            default => $package_name,
+          }
+          $use_package_ensure = $package_ensure ? {
+            undef => $::mariadb::params::package_ensure,
+            default => $package_ensure,
+          }
+          $use_package_provider = $package_provider ? {
+            undef => $::mariadb::params::package_provider,
+            default => $package_provider,
+          }
+          $use_release_max = $release_max ? {
+            undef => $::mariadb::params::release_max,
+            default => $release_max,
+          }
+          $use_public_repo = $public_repo ? {
+            undef => $::mariadb::params::public_repo,
+            default => $public_repo,
+          }
 
-  class { '::mariadb::install': } ->
-  Class['::mariadb']
+  class { '::mariadb::install': } -> Class['::mariadb']
 }
