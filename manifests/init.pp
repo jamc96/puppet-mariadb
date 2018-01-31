@@ -89,5 +89,5 @@ class mariadb(
       fail('MariaDB version is not supported')
     }
 
-  class { '::mariadb::install': } -> Class['::mariadb']
+  class { '::mariadb::install': } -> class { '::mariadb::config': } -> Class['::mariadb']
 }
