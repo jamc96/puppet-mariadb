@@ -106,16 +106,16 @@ class mariadb(
     default => $public_repo,
   }
 
-  $full_version = "${version}.${release}"
+  $full_version = "${use_version}.${use_release}"
   $os_name  = $mariadb::params::os_name
   # Validating release version
   if $use_release < $::mariadb::params::release_max {
       case $::operatingsystemmajrelease {
         '7': {
-          $baseurl = "${public_repo}/${full_version}/${os_name}/${operatingsystemmajrelease}/${architecture}/"
+          $baseurl = "${use_public_repo}/${full_version}/${os_name}/${::operatingsystemmajrelease}/${::architecture}/"
         }
         '6': {
-          $baseurl = "${public_repo}/${full_version}/${os_name}/${operatingsystemmajrelease}/${architecture}/"
+          $baseurl = "${use_public_repo}/${full_version}/${os_name}/${::operatingsystemmajrelease}/${::architecture}/"
         }
         default: {
           fail('OS Release version not supported on this module')
