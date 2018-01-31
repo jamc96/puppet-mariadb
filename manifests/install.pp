@@ -1,9 +1,9 @@
 # == Class: mariadb::install
 #
 class mariadb::install(
+  String $baseurl          = $::mariadb::baseurl,
   String $repo_ensure      = $::mariadb::use_repo_ensure,
   String $repo_name        = $::mariadb::use_repo_name,
-  String $baseurl          = $::mariadb::use_baseurl,
   String $descr            = $::mariadb::use_descr,
   String $enabled          = $::mariadb::use_enabled,
   String $gpgcheck         = $::mariadb::use_gpgcheck,
