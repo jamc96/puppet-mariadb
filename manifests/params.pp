@@ -16,6 +16,10 @@ class mariadb::params {
   $package_name     = 'MariaDB'
   $package_ensure   = 'present'
   $package_provider = 'yum'
+  $config_ensure    = 'present'
+  $config_path      = '/etc/my.cnf'
+  $config_owner     = 'mysql'
+  $config_group     = 'mysql'
 
   $os_name = $facts['operatingsystem'] ? {
     'RedHat' => 'rhel',

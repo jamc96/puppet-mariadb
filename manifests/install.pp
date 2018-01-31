@@ -3,15 +3,15 @@
 class mariadb::install(
   String $baseurl          = $::mariadb::baseurl,
   String $repo_ensure      = $::mariadb::use_repo_ensure,
-  String $repo_name        = $::mariadb::use_repo_name,
-  String $descr            = $::mariadb::use_descr,
-  String $enabled          = $::mariadb::use_enabled,
-  String $gpgcheck         = $::mariadb::use_gpgcheck,
-  String $gpgkey           = $::mariadb::use_gpgkey,
-  String $package_name     = $::mariadb::use_package_name,
   String $package_ensure   = $::mariadb::use_package_ensure,
-  String $package_provider = $::mariadb::use_package_provider,
-) {
+  String $repo_name        = $::mariadb::params::repo_name,
+  String $descr            = $::mariadb::params::descr,
+  String $enabled          = $::mariadb::params::enabled,
+  String $gpgcheck         = $::mariadb::params::gpgcheck,
+  String $gpgkey           = $::mariadb::params::gpgkey,
+  String $package_name     = $::mariadb::params::package_name,
+  String $package_provider = $::mariadb::params::package_provider,
+) inherits mariadb::params {
   # Adding repository
   yumrepo { $repo_name:
     ensure   => $repo_ensure,
