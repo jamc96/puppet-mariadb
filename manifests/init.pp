@@ -46,7 +46,7 @@ class mariadb(
   Optional[Pattern[/latest|^[.+_0-9:~-]+$/]] $version = undef,
   Pattern[/present|absent/] $package_ensure = 'present',
   Pattern[/present|absent/] $config_ensure  = 'present',
-  Pattern[/present|absent/] $service_ensure  = 'running'
+  Pattern[/running|stopped/] $service_ensure  = 'running'
   ) inherits mariadb::params {
   # GLobal variables
   $use_version = $version ? {
