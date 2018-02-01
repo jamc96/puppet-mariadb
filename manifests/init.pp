@@ -43,7 +43,7 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class mariadb(
-  Pattern[/latest|^[.+_0-9:~-]+$/] $version = undef,
+  Optional[Pattern[/latest|^[.+_0-9:~-]+$/]] $version = undef,
   Pattern[/present|absent/] $package_ensure = 'present',
   Pattern[/present|absent/] $config_ensure  = 'present'
   ) inherits mariadb::params {
