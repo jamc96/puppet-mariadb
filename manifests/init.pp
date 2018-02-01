@@ -45,7 +45,8 @@
 class mariadb(
   Optional[Pattern[/latest|^[.+_0-9:~-]+$/]] $version = undef,
   Pattern[/present|absent/] $package_ensure = 'present',
-  Pattern[/present|absent/] $config_ensure  = 'present'
+  Pattern[/present|absent/] $config_ensure  = 'present',
+  Pattern[/present|absent/] $service_ensure  = 'running'
   ) inherits mariadb::params {
   # GLobal variables
   $use_version = $version ? {
@@ -65,10 +66,14 @@ class mariadb(
     'present' => $::mariadb::params::config_ensure,
     default => $config_ensure,
   }
+  $use_service_ensure = $service_ensure ? {
+    'running' => $::mariadb::params::service_ensure,
+    default => $service_ensure,
+  }
   $public_repo  = $::mariadb::params::public_repo
   $os_name  = $mariadb::params::os_name
   # Validating release version
   $baseurl = "${public_repo}/${use_version}/${os_name}/${::operatingsystemmajrelease}/${::architecture}/"
 
-  class { '::mariadb::install': } -> class { '::mariadb::config': } -> Class['::mariadb']
+  class { '::mariadb::install': } -> class { '::mariadb::config': } ~> class { '::mariadb::service': } -> Class['::mariadb']
 }
