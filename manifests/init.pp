@@ -48,7 +48,7 @@ class mariadb(
   Pattern[/present|absent/] $config_ensure            = 'present',
   Pattern[/running|stopped/] $service_ensure          = 'running',
   String $config_file                                 = '/etc/my.cnf',
-  Stromg $service_name                                = 'mysql',
+  String $service_name                                = 'mysql',
   ) {
   # global variables
   $use_version = $version ? {
