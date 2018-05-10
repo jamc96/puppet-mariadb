@@ -44,36 +44,37 @@
 #
 class mariadb(
   Optional[Pattern[/latest|^[.+_0-9:~-]+$/]] $version = undef,
-  Pattern[/present|absent/] $package_ensure = 'present',
-  Pattern[/present|absent/] $config_ensure  = 'present',
-  Pattern[/running|stopped/] $service_ensure  = 'running'
-  ) inherits mariadb::params {
-  # GLobal variables
+  Pattern[/present|absent/] $package_ensure           = 'present',
+  Pattern[/present|absent/] $config_ensure            = 'present',
+  Pattern[/running|stopped/] $service_ensure          = 'running',
+  String $config_file                                 = '/etc/my.cnf',
+  Stromg $service_name                                = 'mysql',
+  ) {
+  # global variables
   $use_version = $version ? {
-    'latest' => $::mariadb::parameter::latest_version,
-    undef => $::mariadb::params::version,
+    'latest' => '10.3.4',
+    undef => '10.0.29',
     default => $version,
   }
-  $use_package_ensure = $package_ensure ? {
-    'present' => $::mariadb::params::package_ensure,
-    default => $package_ensure,
-  }
-  $use_repo_ensure = $package_ensure ? {
-    'absent' => $package_ensure,
-    default => $::mariadb::params::repo_ensure,
-  }
-  $use_config_ensure = $config_ensure ? {
-    'present' => $::mariadb::params::config_ensure,
-    default => $config_ensure,
-  }
-  $use_service_ensure = $service_ensure ? {
-    'running' => $::mariadb::params::service_ensure,
-    default => $service_ensure,
-  }
-  $public_repo  = $::mariadb::params::public_repo
-  $os_name  = $mariadb::params::os_name
-  # Validating release version
-  $baseurl = "${public_repo}/${use_version}/${os_name}/${::operatingsystemmajrelease}/${::architecture}/"
 
-  class { '::mariadb::install': } -> class { '::mariadb::config': } ~> class { '::mariadb::service': } -> Class['::mariadb']
+  $public_repo = 'https://yum.mariadb.org'
+  $os_name = $facts['operatingsystem'] ? {
+    'RedHat' => 'rhel',
+    default  => 'centos',
+  }
+  $baseurl = "${public_repo}/${use_version}/${os_name}/${::operatingsystemmajrelease}/${::architecture}/"
+  $gpgkey = "${public_repo}/RPM-GPG-KEY-MariaDB"
+  $server_package_name = 'MariaDB-server'
+  $client_package_name = 'MariaDB-client'
+  $common_package_name = 'MariaDB-common'
+  $compat_package_name = 'MariaDB-compat'
+  # module containment
+  contain ::mariadb::install
+  contain ::mariadb::config
+  contain ::mariadb::service
+  # module relationship
+  Class['::mariadb::install']
+  -> Class['::mariadb::config']
+  ~> Class['::mariadb::service']
+
 }
