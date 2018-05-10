@@ -9,7 +9,7 @@
 class mariadb::service {
 # creating mariadb service
 service { $::mariadb::service_name:
-    ensure     => $::mysql::service_ensure,
+    ensure     => $::mariadb::service_ensure,
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
