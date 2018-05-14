@@ -5,7 +5,7 @@ class mariadb::config {
   file { $mariadb::config_file:
     ensure => $mariadb::config_ensure,
     path   => $mariadb::config_file,
-    mode   => '0644',
+    mode   => '0774',
     owner  => 'mysql',
     group  => 'mysql',
   }
