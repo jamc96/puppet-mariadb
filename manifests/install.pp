@@ -1,6 +1,6 @@
 # == Class: mariadb::install
 #
-class mariadb::install {
+class mariadb::install inherits mariadb {
   # install mariadb respository
   yumrepo { 'mariadb':
     ensure   => 'present',
