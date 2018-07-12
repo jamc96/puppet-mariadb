@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'mariadb::service' do
+describe 'mariadb::config' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

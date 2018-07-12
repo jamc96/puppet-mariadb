@@ -6,7 +6,7 @@
 #
 # @example
 #   include mariadb::service
-class mariadb::service {
+class mariadb::service inherits mariadb {
 # creating mariadb service
 service { $::mariadb::service_name:
     ensure     => $::mariadb::service_ensure,
