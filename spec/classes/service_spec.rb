@@ -1,11 +1,15 @@
 require 'spec_helper'
 
 describe 'mariadb::service' do
-  on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
-      let(:facts) { os_facts }
+    context "on Redhat" do
+      let(:facts) {{}}
 
       it { is_expected.to compile }
+      it {
+        is_expected.to contain_service('mysqld')
+        .with(
+          ensure: 'running',
+        )
+      }
     end
-  end
 end
