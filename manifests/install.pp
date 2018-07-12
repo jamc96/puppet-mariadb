@@ -12,7 +12,7 @@ class mariadb::install inherits mariadb {
     gpgkey   => $::mariadb::gpgkey,
   }
   # install all mariadb packages
-  File {
+  Package {
     ensure   => $mariadb::package_ensure,
     provider => 'yum',
   }
